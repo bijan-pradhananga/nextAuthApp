@@ -86,7 +86,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token
         },
         signIn: async ({ user, account }) => {
-            if (account?.provider === 'google') {
+            if (account?.provider === 'google' || 'github') {
                 try {
                     const { email, name, id } = user;
                     if (name) {
@@ -101,6 +101,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                                 lastName,
                                 authProviderId: id
                             });
+                            return true;
                         } else {
                             console.log('User already exists:', alreadyUser);
                             return true;
@@ -118,5 +119,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
         }
     },
-    debug: true,
+    // debug: true,
 })
